@@ -18,7 +18,7 @@ public class OAS {
         auctionHouse.addBidder(bidderB, SecurityLabel.PUBLIC);
 
         // Create an auction
-        Item item = new Item("Artwork", 500.0);
+        Item item = new Item("Artwork", 500);
         auctionHouse.createAuction(item, SecurityLabel.CONFIDENTIAL);
     }
 }
