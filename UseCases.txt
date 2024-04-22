@@ -1,0 +1,38 @@
+USE CASE 1
+start: Vase starting price is: 500 kr
+raises are in steps of 50 kr
+
+A bids 550 Kr
+C bids 600 Kr
+B bids 650 Kr
+C bids 700 Kr
+B bids 700 Kr
+C bids 750 Kr
+going once ... going twice ... sold
+
+
+USE CASE 2
+start: Vase starting price is: 500 kr
+raises are in steps of 50 kr
+
+auction house bids for B: 550 Kr
+C bids 600 Kr
+auction house bids for B: 650 Kr
+C bids 700 Kr
+auction house bids for B: 700 Kr
+C bids 750 Kr
+going once ... going twice ... sold
+
+
+USE CASE 3
+
+Bid limit for new bidders in Auction House 2: 600 kr
+Bid limit for referred bidders in Auction House 2: 700 kr
+Bid limit for known bidders in Auction House 2: 800 kr
+
+
+Bidder A is a known bidder in Auction House 1 with a Reputation status: GOOD
+Bidder A wants to participate in an auction in Auction House 2
+Auction House 2 checks if Bidder A has a reputation status in another house
+Auction House 1 declassifies the reputation status of Bidder A, and shares the information
+Bid limit for Bidder A in Auction House 2 is set to 700 kr

@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 class Auction {
-    private Item item;
-    private ArrayList<Bid> bids;
-    private SecurityLabel label;
+    private Item item; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
+    private ArrayList<Bid> commissionBids; // {AuctionHouse:AuctionHouse}
+    private ArrayList<Bid> bids; // {AuctionHouse:LiveBidder}
+    private int soldPrice; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
 
-    public Auction(Item item, SecurityLabel label) {
+    public Auction(Item item) {
         this.item = item;
-        this.label = label;
         bids = new ArrayList<>();
     }
 
     // Method to receive a bid
-    public void receiveBid(Bidder bidder, double amount, SecurityLabel label) {
-        Bid bid = new Bid(bidder, amount, label);
+    public void receiveBid(Bidder bidder, int amount) {
+        Bid bid = new Bid(bidder, amount);
         bids.add(bid);
     }
 

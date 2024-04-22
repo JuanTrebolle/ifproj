@@ -1,37 +1,42 @@
+import java.util.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 class AuctionHouse {
     private ArrayList<Auction> auctions;
-    private HashMap<Bidder, SecurityLabel> bidderLabels;
-    private HashMap<Bidder, Double> commissionBids; // Stores commission bids for each bidder
+    private Map<Bidder, Reputation> bidderReputations;
 
     public AuctionHouse() {
         auctions = new ArrayList<>();
-        bidderLabels = new HashMap<>();
-        commissionBids = new HashMap<>();
+        bidderReputations = new HashMap<>();
     }
 
-    // Method to add a bidder with a security label
-    public void addBidder(Bidder bidder, SecurityLabel label) {
-        bidderLabels.put(bidder, label);
+    public void addBidder(Bidder bidder, Reputation reputation) {
+        bidderReputations.put(bidder, reputation);
     }
 
-    // Method to create a new auction
-    public void createAuction(Item item, SecurityLabel label) {
-        Auction auction = new Auction(item, label);
+    public void createAuction(Item item) {
+        Auction auction = new Auction(item);
         auctions.add(auction);
     }
 
-    // Method to place a commission bid
     public void placeCommissionBid(Bidder bidder, double amount) {
-        commissionBids.put(bidder, amount);
+        // Implementation of commission bids
     }
 
-
-    // Information flow analysis: Check if the bid amount leaks information
-    public boolean isInformationFlowSecure(Bidder bidder, double amount, SecurityLabel label) {
-        SecurityLabel bidderLabel = bidderLabels.get(bidder);
-        return label.compareTo(bidderLabel) <= 0; // Check if label is less sensitive or equal to bidder's label
+    public void simulateLiveBidding() {
+        // Implementation of live bidding simulation
     }
-}
+
+    public void registerWithReputation(Bidder bidder, AuctionHouse otherAuctionHouse, Bidder referenceBidder) {
+        Reputation reputation = otherAuctionHouse.getReputation(referenceBidder);
+        bidderReputations.put(bidder, reputation);
+    }
+
+    public double getBiddingLimit(Bidder bidder) {
+        Reputation reputation = bidderReputations.getOrDefault(bidder, Reputation.NEW);
+        return reputation.getBiddingLimit();
+    }
+
+    public Reputation getReputation(Bidder bidder) {
+        return bidderReputations.getOrDefault(bidder, Reputation.NEW);
+    }

@@ -1,11 +1,12 @@
 class Bid {
-    private Bidder bidder;
-    private double amount;
-    private SecurityLabel label;
+    private String bidType; // {Bidder:AuctionHouse}
+    private Bidder bidderID; // {Bidder:AuctionHouse}
+    private double amount; // {Bidder:AuctionHouse}
 
-    public Bid(Bidder bidder, double amount, SecurityLabel label) {
-        this.bidder = bidder;
+    public Bid(String bidType, Bidder bidderID, double amount) {
+        this.bidType = bidType;
+        this.bidderID = bidderID;
         this.amount = amount;
-        this.label = label;
+
     }
 }

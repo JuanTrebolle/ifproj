@@ -1,6 +1,6 @@
 class Item {
-    private String name;
-    private int startingPrice;
+    private String name; // {⊥}
+    private int startingPrice; // {⊥}
 
     Item(String name, int startingPrice){
         this.name = name;
