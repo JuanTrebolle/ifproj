@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 
 class Bidder {
-    private int id;
-    private ArrayList houses;
+    private String name;
 
+    public Bidder(String name) {
+        this.name = name;
+    }
 }
+
