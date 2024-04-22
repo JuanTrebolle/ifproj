@@ -21,7 +21,7 @@ public class OAS {
 
         // Create an auction
         Item item = new Item("Artwork", 500);
-        auctionHouse.createAuction(item, SecurityLabel.CONFIDENTIAL);
+        auctionHouse.createAuction(item);
 
 
 
