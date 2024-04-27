@@ -10,20 +10,22 @@ public class OAS {
         ArrayList<Bidder> bidders = new ArrayList<>();
         ArrayList<Item> items = new ArrayList<>();
 
-
         AuctionHouse auctionHouse = new AuctionHouse();
 
         // Define bidders and their security labels
         Bidder bidderA = new Bidder("BidderA");
         Bidder bidderB = new Bidder("BidderB");
-        auctionHouse.addBidder(bidderA);
-        auctionHouse.addBidder(bidderB);
+        Reputation reputationA = new Reputation();
+        Reputation reputationB = new Reputation();
+
+
+        auctionHouse.addBidder(bidderA, reputationA);
+        auctionHouse.addBidder(bidderB, reputationB);
 
         // Create an auction
         Item item = new Item("Artwork", 500);
         auctionHouse.createAuction(item);
-
-
+        auctionHouse.simulateLiveBidding(bidders, 300);
 
         // Use Case 2: Live Bidding with Commission Bids
 
