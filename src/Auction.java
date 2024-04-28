@@ -8,12 +8,18 @@ class Auction {
     private ArrayList<Bid> bids; // {AuctionHouse:LiveBidder}
     private int soldPrice; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
     private int currentHighestBid; // TODO: complete lattice
+    private ArrayList<Bidder> bidders; // TODO: complete lattice
 
-    public Auction(Item item) {
+    public Auction(Item item, ArrayList<Bidder> bidders) {
         this.auctionID = UUID.randomUUID().toString();
         this.item = item;
         bids = new ArrayList<>();
         currentHighestBid = item.getStartingPrice();
+        this.bidders = bidders;
+    }
+
+    public ArrayList<Bidder> getBidders() {
+        return this.bidders;
     }
 
     public String getAuctionID() {
