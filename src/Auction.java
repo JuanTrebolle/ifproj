@@ -5,10 +5,10 @@ import java.util.UUID;
 
 class Auction {
     private String auctionID; // {AuctionHouse:AuctionHouse}
-    private Item item; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
+    private Item item; // {AuctionHouse:AuctionHouse, LiveBidder, CommissionBidder}
     private ArrayList<Bid> commissionBids; // {AuctionHouse:AuctionHouse}
     private ArrayList<Bid> bids; // {AuctionHouse:LiveBidder}
-    private int soldPrice; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
+    private int soldPrice; // {AuctionHouse:AuctionHouse, LiveBidder, CommissionBidder}
     private int currentHighestBid; // TODO: complete lattice
     private ArrayList<Bidder> bidders; // TODO: complete lattice
 
@@ -35,7 +35,7 @@ class Auction {
     }
 
     public void placeCommissionBid(double amount, Bidder bidder) {
-        Bid newBid = new Bid(Bid.BidType.COMMISION, bidder, amount);
+        Bid newBid = new Bid(Bid.BidType.COMMISSION, bidder, amount);
         bids.add(newBid);
         if (amount > currentHighestBid) {
             currentHighestBid = (int) amount;

@@ -3,7 +3,7 @@ package src;
 class Bid {
 
     enum BidType {
-        COMMISION, // 0 = Commission bid
+        COMMISSION, // 0 = Commission bid
         LIVE // 1 = Live bid
     }
 
