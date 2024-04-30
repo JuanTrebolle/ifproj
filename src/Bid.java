@@ -6,10 +6,10 @@ class Bid {
     }
 
     private BidType bidType; // {Bidder:AuctionHouse}
-    private Bidder bidderID; // {Bidder:AuctionHouse}
+    private String bidderID; // {Bidder:AuctionHouse}
     private double amount; // {Bidder:AuctionHouse}
 
-    public Bid(BidType bidType, Bidder bidderID, double amount) {
+    public Bid(BidType bidType, String bidderID, double amount) {
         this.bidType = bidType;
         this.bidderID = bidderID;
         this.amount = amount;
@@ -22,4 +22,10 @@ class Bid {
     public double getBidAmount() {
         return this.amount;
     }
+
+    public String getBidderID() {
+        return this.bidderID;
+    }
+
+
 }
