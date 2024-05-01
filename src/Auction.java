@@ -32,6 +32,18 @@ class Auction {
         return this.auctionID;
     }
 
+    public Item getItem() {
+        return this.item;
+    }
+
+    public void addBidder(Bidder bidder) {
+        this.bidders.add(bidder);
+    }
+
+    public Map<String, Bid> getCommissionBids() {
+        return this.map_commisionBids;
+    }
+
     // Method to receive a bid
     public void receiveBid(Bidder bidder, int amount) {
         Bid bid = new Bid(Bid.BidType.LIVE,bidder.getBidderID(), amount);
@@ -39,7 +51,7 @@ class Auction {
     }
 
     public void placeCommissionBid(double amount, Bidder bidder) {
-        Bid newBid = new Bid(Bid.BidType.COMMISION, bidder.getBidderID(), amount);
+        Bid newBid = new Bid(Bid.BidType.COMMISSION, bidder.getBidderID(), amount);
         commissionBids.add(newBid); // we have a separated variable to keep track of the commission bids.
         bids.add(newBid);
         map_bids.put(bidder.getBidderID(), newBid); // Maybe we should use only the map

@@ -15,13 +15,18 @@ class AuctionHouse {
         bidderReputations = new HashMap<>();
     }
 
-    public void addBidder(Bidder bidder, Reputation reputation) {
+    public void addBidder(Bidder bidder, Reputation reputation, Auction auction) {
         bidderReputations.put(bidder, reputation);
+        auction.addBidder(bidder);
     }
 
     public void createAuction(Item item, ArrayList<Bidder> bidders) {
         Auction auction = new Auction(item, bidders);
         auctions.add(auction);
+    }
+
+    public List<Auction> getAuctions() {
+        return this.auctions;
     }
 
    /* public void placeCommissionBid(Bidder bidder, double amount) {
@@ -41,19 +46,11 @@ class AuctionHouse {
         }
     }*/
 
-    public void placeCommissionBid(Bidder bidder, double amount, int auctionID) {
-        Reputation bidderReputation = bidderReputations.get(bidder);
-        if (bidderReputation.getBiddingLimit() < amount) {
-            throw new IllegalArgumentException("Bidder not registered with auction house");
-        }
+    public void placeCommissionBid(Bidder bidder, double amount, Auction auction) {
+        double currentHighestBid = auction.getCurrentHighestBid();
 
-        // Add commission bid to specific auction
-        this.auctions.get(auctionID).placeCommissionBid(amount, bidder);
-
-        for (Auction auction : auctions) {
-            if (auction.getCurrentHighestBid() < amount) {
-                auction.placeCommissionBid(amount, bidder);
-            }
+        if (amount > currentHighestBid) {
+            auction.placeCommissionBid(amount, bidder);
         }
     }
 
@@ -102,38 +99,58 @@ class AuctionHouse {
     /**
      * This is the method I am using in the Use Case 1 simulation
      */
-    public void liveBiddingSimulation(ArrayList<Bidder> bidders) {
-        for (Auction auction : this.auctions) {
-            // Auction starts - B bids
-            auction.placeLiveBid(550, bidders.get(1));
-            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
-            // C bids
-            auction.placeLiveBid(600, bidders.get(2));
-            System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
+    public void liveBiddingSimulation(ArrayList<Bidder> bidders, Auction auction) {
+        // Auction starts - B bids
+        auction.placeLiveBid(550, bidders.get(1));
+        System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
+        // C bids
+        auction.placeLiveBid(600, bidders.get(2));
+        System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
 
-            // B bids
-            auction.placeLiveBid(650, bidders.get(1));
-            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) +  " Kr.");
+        // B bids
+        auction.placeLiveBid(650, bidders.get(1));
+        System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) +  " Kr.");
 
-            // A bids
-            auction.placeLiveBid(700, bidders.get(0));
-            System.out.println("A bids " + auction.getBidAmountByBidderId(bidders.get(0).getBidderID()) + " Kr.");
+        // A bids
+        auction.placeLiveBid(700, bidders.get(0));
+        System.out.println("A bids " + auction.getBidAmountByBidderId(bidders.get(0).getBidderID()) + " Kr.");
 
-            // B bids
-            auction.placeLiveBid(700, bidders.get(1));
-            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
+        // B bids
+        auction.placeLiveBid(700, bidders.get(1));
+        System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
 
-            // C bids
-            auction.placeLiveBid(750, bidders.get(2));
-            System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
+        // C bids
+        auction.placeLiveBid(750, bidders.get(2));
+        System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
 
-            // Auction ends
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        // Auction ends
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("going once ... going twice ... sold"); // TODO: method that resumes everything.
+    }
+
+    public void commissionBiddingSimulation(ArrayList<Bidder> bidders, Auction auction) {
+        Map<String, Bid> commissionBids = auction.getCommissionBids();
+
+        // While there are commission bids
+        while (!commissionBids.isEmpty()) {
+            // Get the highest commission bid
+            double highestCommissionBid = 0;
+            Bid highestCommissionBidder = null;
+            for (Bid bid : commissionBids.values()) {
+                if (bid.getBidAmount() > highestCommissionBid) {
+                    highestCommissionBid = bid.getBidAmount();
+                    highestCommissionBidder = bid;
+                }
             }
-            System.out.println("going once ... going twice ... sold"); // TODO: method that resumes everything.
+
+            // Place the highest commission bid
+            auction.placeCommissionBid(highestCommissionBid, bidders.get(2));
+            System.out.println("Commission bid: " + highestCommissionBid + " Kr.");
+            commissionBids.remove(highestCommissionBidder.getBidderID());
         }
     }
 
@@ -149,6 +166,11 @@ class AuctionHouse {
 
     public Reputation getReputation(Bidder bidder) {
         return bidderReputations.getOrDefault(bidder, bidder.getReputation());
+    }
+
+    public void addAuction(Auction auction) {
+
+        auctions.add(auction);
     }
 
 }
