@@ -1,3 +1,47 @@
+    /*
+    Lattice has 2 levels:
+        * Public:
+            - starting price
+            - current highest bid
+        * Private:
+            - bidder ID
+            - maximum commission bid
+    */
+
+    /*
+    - Inputs
+        * startingPrice (public)
+        * bidderID (Private for each bidder)
+        * maxCommissionBid (Private for each bidder)
+
+    - Output
+        * currentHighestBid (public)
+        * winnerID (public)
+
+    - Variables:
+        * bids (map between bidderID and their bid amount, Private for each bidder's own entry, public for other)
+        * currentWinner (private initially, public only after the auction ends)
+    */
+
+    /*
+    Declassifications
+        - When a bidder places a live bid that matches a commission bid amount (for example, C bids 700 kr), the bidder's
+        identity (bidderID) associated with that bid amount is declassified to public momentarily, revealing only the bidder
+        number but not the actual identity.
+    */
+
+
+    /*
+      Information Flow Analysis
+
+      - Bidders submit commission bids (including bidderId and maxCommissionBid, both labeled Private).
+      - The auction starts with currentHighestBid set to startingPrice (both Public).
+      - Live bids are received and compared to currentHighestBid.
+      - For live bids matching a commission bid amount, the corresponding bidderId is temporarily declassified to Public (revealing only the bidder number).
+      - The winner is determined based on the highest bid (winnerId becomes Public after the auction).
+    */
+
+
 USE CASE 1
 start: Vase starting price is: 500 kr
 raises are in steps of 50 kr

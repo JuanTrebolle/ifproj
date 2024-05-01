@@ -1,10 +1,11 @@
+package src;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
 class Auction {
     private String auctionID; // {AuctionHouse:AuctionHouse}
-    private Item item; // {AuctionHouse:AuctionHouse, LiveBidder, CommisionBidder}
+    private Item item; // {AuctionHouse:AuctionHouse, LiveBidder, CommissionBidder}
     private ArrayList<Bid> commissionBids; // {AuctionHouse:AuctionHouse}
     private Map<String, Bid> map_commisionBids; // {AuctionHouse: AuctionHouse}
     private ArrayList<Bid> bids; // {AuctionHouse:LiveBidder}

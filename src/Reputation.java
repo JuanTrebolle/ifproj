@@ -1,3 +1,5 @@
+package src;
+
 public class Reputation {
 
     private double biddingLimit;
