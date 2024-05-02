@@ -3,9 +3,9 @@ package src;
 import java.util.*;
 
 class AuctionHouse {
-    private String auctionHouseName; // TODO: lattice
-    private String auctionHouseId; // TODO: lattice
-    private ArrayList<Auction> auctions; // TODO: lattice?
+    private String auctionHouseName; // TODO: lattice {AuctionHouse: AuctionHouse, LiveBidder, CommisionBidder}
+    private String auctionHouseId; // TODO: lattice {AuctionHouse: AuctionHouse}
+    private ArrayList<Auction> auctions; // TODO: lattice? {AuctionHouse: AuctionHouse}
     private Map<Bidder, Reputation> bidderReputations; // TODO: lattice?
 
     public AuctionHouse(String name) {
@@ -72,64 +72,68 @@ class AuctionHouse {
     /**
      *  Iterates over all auctions and for each auction, it simulates a series of bids, using random values
      */
-    public void simulateLiveBidding(ArrayList<Bidder> bidders, double amount, Item item) {
-        System.out.println("start: auction house starts the bid for item: " + item.getName() + ". The bid starts at " + amount + " Kr");
-        // Implementation of live bidding simulation
-        Random random = new Random();
-        for (Auction auction : this.auctions) {
-            for (int i = 0; i < 10; i++) {
-                // Generate a random bid amount
-                double bidAmount = auction.getCurrentHighestBid() + 50 * (random.nextDouble() + 1);
-                
-                // Find a random bidder
-                Bidder bidder = bidders.get(random.nextInt(bidders.size()));
-                auction.placeLiveBid(550, bidders.get(0));
-                auction.placeLiveBid(600, bidders.get(1));
-                auction.placeLiveBid(650, bidders.get(0));
-                auction.placeLiveBid(700, bidders.get(2));
-                auction.placeLiveBid(1000, bidders.get(0));
-                auction.placeLiveBid(1250, bidders.get(2));
-
-                // Place the bid
-                if(auction.getCurrentHighestBid() < amount) {
-                    auction.placeLiveBid(bidAmount, bidder);
-                    System.out.println(bidder.getName() + " bids " + bidAmount + " Kr");
-                }
-            }
-        }
-    }
+//    public void simulateLiveBidding(ArrayList<Bidder> bidders, double amount, Item item) {
+//        System.out.println("start: auction house starts the bid for item: " + item.getName() + ". The bid starts at " + amount + " Kr");
+//        // Implementation of live bidding simulation
+//        Random random = new Random();
+//        for (Auction auction : this.auctions) {
+//            for (int i = 0; i < 10; i++) {
+//                // Generate a random bid amount
+//                double bidAmount = auction.getCurrentHighestBid() + 50 * (random.nextDouble() + 1);
+//
+//                // Find a random bidder
+//                Bidder bidder = bidders.get(random.nextInt(bidders.size()));
+//                auction.placeLiveBid(550, bidders.get(0));
+//                auction.placeLiveBid(600, bidders.get(1));
+//                auction.placeLiveBid(650, bidders.get(0));
+//                auction.placeLiveBid(700, bidders.get(2));
+//                auction.placeLiveBid(1000, bidders.get(0));
+//                auction.placeLiveBid(1250, bidders.get(2));
+//
+//                // Place the bid
+//                if(auction.getCurrentHighestBid() < amount) {
+//                    auction.placeLiveBid(bidAmount, bidder);
+//                    System.out.println(bidder.getName() + " bids " + bidAmount + " Kr");
+//                }
+//            }
+//        }
+//    }
 
     /**
      * This is the method I am using in the Use Case 1 simulation
      */
     public void liveBiddingSimulation(ArrayList<Bidder> bidders) {
         for (Auction auction : this.auctions) {
-            // Auction house bids for B
-            auction.placeLiveBid(550, bidders.get(0));
-            System.out.println("auction house bids for B: 550 Kr");
-
+            // Auction starts - B bids
+            auction.placeLiveBid(550, bidders.get(1));
+            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
             // C bids
-            auction.placeLiveBid(600, bidders.get(1));
-            System.out.println("C bids 600 Kr");
+            auction.placeLiveBid(600, bidders.get(2));
+            System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
 
-            // Auction house bids for B
-            auction.placeLiveBid(650, bidders.get(0));
-            System.out.println("auction house bids for B: 650 Kr");
+            // B bids
+            auction.placeLiveBid(650, bidders.get(1));
+            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) +  " Kr.");
 
-            // C bids
-            auction.placeLiveBid(700, bidders.get(1));
-            System.out.println("C bids 700 Kr");
-
-            // Auction house bids for B
+            // A bids
             auction.placeLiveBid(700, bidders.get(0));
-            System.out.println("auction house bids for B: 700 Kr");
+            System.out.println("A bids " + auction.getBidAmountByBidderId(bidders.get(0).getBidderID()) + " Kr.");
+
+            // B bids
+            auction.placeLiveBid(700, bidders.get(1));
+            System.out.println("B bids: " + auction.getBidAmountByBidderId(bidders.get(1).getBidderID()) + " Kr.");
 
             // C bids
-            auction.placeLiveBid(750, bidders.get(1));
-            System.out.println("C bids 750 Kr");
+            auction.placeLiveBid(750, bidders.get(2));
+            System.out.println("C bids " + auction.getBidAmountByBidderId(bidders.get(2).getBidderID()) + " Kr.");
 
             // Auction ends
-            System.out.println("going once ... going twice ... sold");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("going once ... going twice ... sold"); // TODO: method that resumes everything.
         }
     }
 
