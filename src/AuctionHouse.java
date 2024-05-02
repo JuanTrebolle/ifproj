@@ -137,6 +137,7 @@ class AuctionHouse {
         }
     }
 
+    /*
     public void registerWithReputation(Bidder bidder, AuctionHouse otherAuctionHouse, Bidder referenceBidder) {
         Reputation reputation = otherAuctionHouse.getReputation(referenceBidder);
         bidderReputations.put(bidder, reputation);
@@ -150,5 +151,38 @@ class AuctionHouse {
     public Reputation getReputation(Bidder bidder) {
         return bidderReputations.getOrDefault(bidder, bidder.getReputation());
     }
+    */
+
+    // Method to declassify and share reputation information with another auction house
+    // Method to declassify and share reputation information with another auction house
+    public Reputation declassifyReputation(Bidder bidder) {
+        Reputation reputation = bidderReputations.get(bidder);
+        // Simulate declassification process
+        System.out.println("Reputation declassified for bidder: " + bidder.getName());
+        return reputation;
+    }
+
+    // Method to securely share declassified reputation information with another auction house
+    public void shareReputation(Reputation reputation, AuctionHouse otherAuctionHouse) {
+        // Simulate secure sharing process
+        System.out.println("Reputation shared securely with " + otherAuctionHouse.auctionHouseName);
+        otherAuctionHouse.receiveReputation(reputation);
+    }
+
+    // Method to receive reputation information from another auction house
+    public void receiveReputation(Reputation reputation) {
+        // Process received reputation information securely
+        System.out.println("Reputation received securely");
+        // Update bidder's reputation (not implemented in this example)
+    }
+
+
+    // Method to set bidding limit for a bidder based on their reputation status
+    public void setBiddingLimit(Bidder bidder, double limit) {
+        Reputation reputation = bidderReputations.get(bidder);
+        reputation.setBiddingLimit(limit);
+    }
+
+
 
 }

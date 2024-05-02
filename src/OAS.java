@@ -46,6 +46,26 @@ public class OAS {
 
 
         // Use Case 3: Reputation System
+        // Create AuctionHouse instances
+        AuctionHouse auctionHouse1 = new AuctionHouse("Auction House 1");
+        AuctionHouse auctionHouse2 = new AuctionHouse("Auction House 2");
+
+        // Define Bidder A with a known reputation status
+        Bidder bidderA = new Bidder("Bidder A");
+        Reputation reputationA = new Reputation();
+        // Set Bidder A's reputation status to "GOOD" with a bidding limit of 700 kr
+        reputationA.setBiddingLimit(700);
+        auctionHouse1.addBidder(bidderA, reputationA);
+        // Bidder A wants to participate in an auction in Auction House 2
+        // Auction House 2 checks Bidder A's reputation status in Auction House 1
+        Reputation sharedReputation = auctionHouse1.declassifyReputation(bidderA);
+        // Share Bidder A's reputation status with Auction House 2
+        auctionHouse2.receiveReputation(sharedReputation);
+
+        // Set bidding limit for Bidder A in Auction House 2 based on their reputation status
+        auctionHouse2.setBiddingLimit(bidderA, sharedReputation.getBiddingLimit());
+
+        // Now, Bidder A can participate in auctions in Auction House 2 with a bidding limit of 700 kr
     }
 }
 
